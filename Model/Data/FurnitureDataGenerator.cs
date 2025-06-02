@@ -1,4 +1,4 @@
-﻿using Model.Core;
+using Model.Core;
 using Model.Data.Serialization;
 using Newtonsoft.Json;
 using System;
@@ -98,42 +98,42 @@ namespace Model.Data
             var catalogs = new List<FurnitureCatalog>();
 
             // Каталог "Коллекция мебели для отдыха"
-            var summerCatalog = new FurnitureCatalog
+            var relaxCatalog = new FurnitureCatalog
             {
                 Name = "Коллекция мебели для работы"
             };
             var random = new Random();
-            summerCatalog.Add(allFurniture
+            relaxCatalog.Add(allFurniture
                 .Where(f => f is Chair || f is Table)  // Берем только стулья и столы
                 .OrderBy(x => random.Next())          // Случайно перемешиваем
                 .Take(8)                              // Берем первые 8
                 .ToArray());
-            catalogs.Add(summerCatalog);
+            catalogs.Add(relaxCatalog);
 
             // Каталог "Коллекция мебели для отдыха"
-            var winterCatalog = new FurnitureCatalog
+            var workCatalog = new FurnitureCatalog
             {
                 Name = "Коллекция мебели для отдыха"
             };
             var random2 = new Random();
-            winterCatalog.Add(allFurniture
+            workCatalog.Add(allFurniture
                 .Where(f => f is Sofa || f is Bed)  // Берем только стулья и столы
                 .OrderBy(x => random2.Next())          // Случайно перемешиваем
                 .Take(8)                              // Берем первые 8
                 .ToArray());
-            catalogs.Add(winterCatalog);
+            catalogs.Add(workCatalog);
 
             // Каталог "Все коллекции"
-            var allSeasonCatalog = new FurnitureCatalog
+            var allCatalog = new FurnitureCatalog
             {
                 Name = "Выбор нашего магазина"
             };
             var random3 = new Random();
-            allSeasonCatalog.Add(allFurniture
+            allCatalog.Add(allFurniture
                 .OrderBy(x => random3.Next())          // Случайно перемешиваем
                 .Take(12)                              // Берем первые 8
                 .ToArray());
-            catalogs.Add(allSeasonCatalog);
+            catalogs.Add(allCatalog);
 
             return catalogs;
         }
