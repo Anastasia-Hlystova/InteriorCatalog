@@ -1,5 +1,4 @@
 # InteriorCatalog
-Описание интерфейса взаимодействия с проектом "InteriorCatalog"
 
 **1.Главное окно (MainForm)**
 
