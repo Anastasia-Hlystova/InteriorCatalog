@@ -16,9 +16,13 @@ namespace InteriorCatalog
         public MainForm()
         {
             InitializeComponent();
+            this.BackColor = Color.LightPink;
+            catalogComboBox.BackColor = Color.LightPink;
+            catalogComboBox.ForeColor = Color.Black;
+            catalogComboBox.FlatStyle = FlatStyle.Flat;
             InitializeFormatComboBox();
             LoadCatalogs();
-            InitializeCatalogComboBox();
+            InitializeCatalogComboBox(); 
         }
         private void InitializeFormatComboBox()
         {
@@ -26,14 +30,14 @@ namespace InteriorCatalog
             {
                 Dock = DockStyle.Top,
                 Height = 40,
-                BackColor = SystemColors.Control,
+                BackColor = Color.LightPink,
                 Padding = new Padding(5),
                 Margin = new Padding(0, 0, 0, 10)
             };
 
             var formatLabel = new Label
             {
-                Text = "Формат сохранения:",
+                Text = "Р¤РѕСЂРјР°С‚ СЃРѕС…СЂР°РЅРµРЅРёСЏ:",
                 AutoSize = true,
                 Margin = new Padding(5),
                 TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -42,11 +46,15 @@ namespace InteriorCatalog
             var formatComboBox = new ComboBox
             {
                 Width = 120,
-                DropDownStyle = ComboBoxStyle.DropDownList
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                BackColor = Color.Pink, // Р РѕР·РѕРІС‹Р№ С„РѕРЅ
+                ForeColor = Color.Black,     // Р§РµСЂРЅС‹Р№ С‚РµРєСЃС‚ РґР»СЏ РєРѕРЅС‚СЂР°СЃС‚Р°
+                FlatStyle = FlatStyle.Flat
+
             };
 
             formatComboBox.Items.AddRange(new object[] { "JSON", "XML" });
-            formatComboBox.SelectedIndex = 0; // JSON по умолчанию
+            formatComboBox.SelectedIndex = 0; // JSON РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 
             formatComboBox.SelectedIndexChanged += (sender, e) =>
             {
@@ -73,7 +81,7 @@ namespace InteriorCatalog
                     string oldPath = Path.Combine(_dataDirectory, $"{catalogName}.{(_currentFormat == "json" ? "xml" : "json")}");
                     string newPath = Path.Combine(_dataDirectory, $"{catalogName}.{_currentFormat}");
 
-                    // Если существует файл в старом формате - конвертируем
+                    // Р•СЃР»Рё СЃСѓС‰РµСЃС‚РІСѓРµС‚ С„Р°Р№Р» РІ СЃС‚Р°СЂРѕРј С„РѕСЂРјР°С‚Рµ - РєРѕРЅРІРµСЂС‚РёСЂСѓРµРј
                     if (File.Exists(oldPath))
                     {
                         if (_currentFormat == "json")
@@ -85,7 +93,7 @@ namespace InteriorCatalog
                             catalog.SaveToXml(newPath);
                         }
                     }
-                    // Если файл только в новом формате - просто обновляем
+                    // Р•СЃР»Рё С„Р°Р№Р» С‚РѕР»СЊРєРѕ РІ РЅРѕРІРѕРј С„РѕСЂРјР°С‚Рµ - РїСЂРѕСЃС‚Рѕ РѕР±РЅРѕРІР»СЏРµРј
                     else if (File.Exists(newPath))
                     {
                         if (_currentFormat == "json")
@@ -99,26 +107,26 @@ namespace InteriorCatalog
                     }
                 }
 
-                MessageBox.Show($"Все каталоги успешно конвертированы в {_currentFormat.ToUpper()} формат",
-                    "Конвертация завершена", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Р’СЃРµ РєР°С‚Р°Р»РѕРіРё СѓСЃРїРµС€РЅРѕ РєРѕРЅРІРµСЂС‚РёСЂРѕРІР°РЅС‹ РІ {_currentFormat.ToUpper()} С„РѕСЂРјР°С‚",
+                    "РљРѕРЅРІРµСЂС‚Р°С†РёСЏ Р·Р°РІРµСЂС€РµРЅР°", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при конвертации каталогов: {ex.Message}",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РєРѕРЅРІРµСЂС‚Р°С†РёРё РєР°С‚Р°Р»РѕРіРѕРІ: {ex.Message}",
+                    "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void LoadCatalogs()
         {
             try
             {
-                // Проверяем, есть ли данные при первом запуске
+                // РџСЂРѕРІРµСЂСЏРµРј, РµСЃС‚СЊ Р»Рё РґР°РЅРЅС‹Рµ РїСЂРё РїРµСЂРІРѕРј Р·Р°РїСѓСЃРєРµ
                 if (!Directory.Exists(_dataDirectory))
                 {
                     FurnitureDataGenerator.SaveInitialData(_dataDirectory);
                 }
 
-                // Загружаем каталоги
+                // Р—Р°РіСЂСѓР¶Р°РµРј РєР°С‚Р°Р»РѕРіРё
                 var catalogFiles = Directory.GetFiles(_dataDirectory, $"catalog_*.{_currentFormat}");
                 foreach (var file in catalogFiles)
                 {
@@ -131,13 +139,13 @@ namespace InteriorCatalog
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка загрузки каталога из файла {file}: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РєР°С‚Р°Р»РѕРіР° РёР· С„Р°Р№Р»Р° {file}: {ex.Message}", "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"РћС€РёР±РєР° Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С…: {ex.Message}", "РћС€РёР±РєР°", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
