@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Model.Core;
 using Model.Data;
 using System;
@@ -15,6 +15,7 @@ namespace InteriorCatalog
         public CatalogForm(FurnitureCatalog catalog)
         {
             InitializeComponent(); //Вызывает автоматически сгенерированный метод, который инициализирует все компоненты формы (кнопки, таблицы, панели и т.д.), определенные в дизайнере форм.
+            this.BackColor = Color.LightPink;
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             Text = $"{_catalog.Name} - Каталог";
             InitializeFilterComboBox();
@@ -29,7 +30,7 @@ namespace InteriorCatalog
                 Name = "filterPanel",
                 Dock = DockStyle.Top, //означает, что панель "приклеится" к верхнему краю формы
                 Height = 40,
-                BackColor = SystemColors.Control,
+                BackColor = Color.LightPink,
                 Padding = new Padding(5),
                 Margin = new Padding(0, 0, 0, 5) //Создает промежуток между этой панелью и следующим элементом управления
             };
@@ -46,7 +47,8 @@ namespace InteriorCatalog
             {
                 Name = "typeFilterComboBox",
                 Width = 150,
-                DropDownStyle = ComboBoxStyle.DropDownList
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                BackColor = Color.White
             };
 
             // Добавляем варианты фильтрации
@@ -141,7 +143,7 @@ namespace InteriorCatalog
             {
                 Dock = DockStyle.Top,
                 Height = 40,
-                BackColor = SystemColors.Control,
+                BackColor = Color.LightPink,
                 Padding = new Padding(5),
                 Margin = new Padding(0, 0, 0, 10)
             };
@@ -154,7 +156,8 @@ namespace InteriorCatalog
                 Height = 30,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 Margin = new Padding(5),
-                Tag = "article" // Важно: задаем Tag для идентификации
+                Tag = "article", // Важно: задаем Tag для идентификации
+                BackColor = Color.White
             };
 
             var btnSortName = new Button
@@ -164,7 +167,8 @@ namespace InteriorCatalog
                 Height = 30,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 Margin = new Padding(5),
-                Tag = "name"
+                Tag = "name",
+                BackColor = Color.White
             };
 
             var btnSortPrice = new Button
@@ -174,7 +178,8 @@ namespace InteriorCatalog
                 Height = 30,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 Margin = new Padding(5),
-                Tag = "price"
+                Tag = "price",
+                BackColor = Color.White
             };
             var btnGroup = new Button
             {
@@ -183,7 +188,8 @@ namespace InteriorCatalog
                 Height = 30,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
                 Margin = new Padding(5),
-                Tag = "group"
+                Tag = "group",
+                BackColor = Color.White
             };
             // 3. Добавляем обработчики
             btnSortArticle.Click += SortButton_Click;
@@ -290,6 +296,21 @@ namespace InteriorCatalog
         }
         private void InitializeDataGridView()
         {
+            furnitureDataGridView.BackgroundColor = Color.LightPink;
+            furnitureDataGridView.DefaultCellStyle.BackColor = Color.LightPink;
+            furnitureDataGridView.DefaultCellStyle.SelectionBackColor = Color.HotPink; // Цвет выделения
+
+            // Настройка заголовков
+            furnitureDataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightPink;
+            furnitureDataGridView.RowHeadersDefaultCellStyle.BackColor = Color.LightPink;
+
+            // Альтернативные строки (если включена AlternatingRows)
+            furnitureDataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.Pink; // Чуть темнее для четных строк
+
+            // Границы и сетка
+            furnitureDataGridView.GridColor = Color.FromArgb(255, 200, 150); // Тонкая розовая сетка
+            furnitureDataGridView.BorderStyle = BorderStyle.None; // Убираем стандартную рамку
+
             // Настройка DataGridView
             furnitureDataGridView.AutoGenerateColumns = false;
             furnitureDataGridView.AllowUserToAddRows = false;
